@@ -63,174 +63,180 @@ setter(value -1 );
     }
     }
   return (
-    <div className="flex  bg-slate-700 w-full h-screen p-10 ">
-      
-       {/* Canvas */}
-      <div className="bg-slate-400 w-1/2 h-full items-center flex justify-center flex-wrap">
-       
-       <ErrorBoundary FallBackComponent = {ErrorFallback}>
-        <Canvas camera={{ position: [1, 3, 14], fov: 15 }} shadows
-        className="bg-black">
-          <ambientLight intensity={2} />
-          <directionalLight position={[5,5,5]} intensity={3} castShadow />
-          <directionalLight position={[-5,-5,-5]} intensity={3} />
-          <pointLight position={[-1,1,1]} intensity={8} />
-          <Environment preset="studio" />
+    <div className="flex flex-col w-full min-h-screen gap-4 p-4 sm:flex-row bg-slate-700 sm:p-10">
+  {/* Canvas */}
+  <div className="bg-slate-400 w-full sm:w-1/2 h-[400px] sm:h-full items-center flex justify-center rounded-md shadow-md">
+    <ErrorBoundary FallBackComponent={ErrorFallback}>
+      <Canvas
+        camera={{ position: [1, 3, 14], fov: 15 }}
+        shadows
+        className="bg-black"
+      >
+        <ambientLight intensity={2} />
+        <directionalLight position={[5, 5, 5]} intensity={3} castShadow />
+        <directionalLight position={[-5, -5, -5]} intensity={3} />
+        <pointLight position={[-1, 1, 1]} intensity={8} />
+        <Environment preset="studio" />
 
-          <Suspense fallback={<Loader />} >
-          <MaleModel 
-          key={`${height}-${waist}-${selectedColor}-${adjustCloth}`}
-          adjustCloth={adjustCloth} 
-          height={height}
-          waist={waist}
-          shirtColor={selectedColor}
-          product={productData}
-          setIsLoading = {setIsLoading}
+        <Suspense fallback={<Loader />}>
+          <MaleModel
+            key={`${height}-${waist}-${selectedColor}-${adjustCloth}`}
+            adjustCloth={adjustCloth}
+            height={height}
+            waist={waist}
+            shirtColor={selectedColor}
+            product={productData}
+            setIsLoading={setIsLoading}
           />
-          </Suspense>
-          <OrbitControls />
-        </Canvas>
-        </ErrorBoundary>
-      </div>
-      
-      {/* Form Section  */}
-      <div className="w-full sm:w-1/2 h-full p-4 sm:p-10 bg-white justify-center flex items-center flex-wrap">
-        <form className={`space-y-6 ${isLoading ? 'pointer-events-none opacity-50': ''} max-w-md w-full`}>
-          <fieldset>
-            <legend className="text-xl font-bold mb-3">
-              Add your requirements
-            </legend>
+        </Suspense>
+        <OrbitControls />
+      </Canvas>
+    </ErrorBoundary>
+  </div>
 
-            {/* Height Input */}
-            <div className="mb-4">
-              <label htmlFor="height" className="block mb-1">
-                Height (cm)
-              </label>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => decrement(setHeight, height, 120)}
-                  className="px-2 py-1 bg-gray-600 text-white text-lg font-bold hover:bg-black active:bg-blue-500"
-                >
-                  -
-                </button>
-                <input
-                  type="number"
-                  name="height"
-                  id="height"
-                  value={height}
-                  max={200}
-                  min={120}
-                  onChange={(e) => handleInputChange(e, setHeight)}
-                  onKeyDown={(e) => e.preventDefault()}
-                  className="text-center border w-44 border-b-sky-200"
-                />
+  {/* Form Section */}
+  <div className="flex items-center justify-center w-full p-4 bg-white rounded-md shadow-md sm:w-1/2 sm:p-10">
+    <form
+      className={`space-y-6 ${
+        isLoading ? 'pointer-events-none opacity-50' : ''
+      } max-w-md w-full`}
+    >
+      <fieldset>
+        <legend className="mb-3 text-xl font-bold">
+          Add your requirements
+        </legend>
 
-                <button
-                  type="button"
-                  onClick={() => increment(setHeight, height, 200)}
-                  className="px-2 py-1 bg-gray-600 text-white text-lg font-bold hover:bg-black active:bg-blue-500"
-                >
-                  +
-                </button>
-              </div>
-            </div>
+        {/* Height */}
+        <div className="mb-4">
+          <label htmlFor="height" className="block mb-1">
+            Height (cm)
+          </label>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => decrement(setHeight, height, 120)}
+              className="px-3 py-2 font-bold text-white bg-gray-600 hover:bg-black active:bg-blue-500"
+            >
+              -
+            </button>
+            <input
+              type="number"
+              name="height"
+              id="height"
+              value={height}
+              max={200}
+              min={120}
+              onChange={(e) => handleInputChange(e, setHeight)}
+              onKeyDown={(e) => e.preventDefault()}
+              className="w-24 text-center border sm:w-44 border-b-sky-200"
+            />
+            <button
+              type="button"
+              onClick={() => increment(setHeight, height, 200)}
+              className="px-3 py-2 font-bold text-white bg-gray-600 hover:bg-black active:bg-blue-500"
+            >
+              +
+            </button>
+          </div>
+        </div>
 
-            {/* Waist Input */}
-            <div className="mb-4">
-              <label htmlFor="waist" className="block mb-1">
-                Waist (cm)
-              </label>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => decrement(setWaist, waist, 40)}
-                  className="px-2 py-1 bg-gray-600 text-white text-lg font-bold hover:bg-black active:bg-blue-500"
-                >
-                  -
-                </button>
-                <input
-                  type="number"
-                  name="waist"
-                  id="waist"
-                  max={110}
-                  min={40}
-                  value={waist}
-                  onChange={(e) => handleInputChange(e, setWaist)}
-                   onKeyDown={(e) => e.preventDefault()}
-                  className="text-center border w-44 border-b-sky-200"
-                />
+        {/* Waist */}
+        <div className="mb-4">
+          <label htmlFor="waist" className="block mb-1">
+            Waist (cm)
+          </label>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => decrement(setWaist, waist, 40)}
+              className="px-3 py-2 font-bold text-white bg-gray-600 hover:bg-black active:bg-blue-500"
+            >
+              -
+            </button>
+            <input
+              type="number"
+              name="waist"
+              id="waist"
+              value={waist}
+              max={110}
+              min={40}
+              onChange={(e) => handleInputChange(e, setWaist)}
+              onKeyDown={(e) => e.preventDefault()}
+              className="w-24 text-center border sm:w-44 border-b-sky-200"
+            />
+            <button
+              type="button"
+              onClick={() => increment(setWaist, waist, 110)}
+              className="px-3 py-2 font-bold text-white bg-gray-600 hover:bg-black active:bg-blue-500"
+            >
+              +
+            </button>
+          </div>
+        </div>
 
-                <button
-                  type="button"
-                  onClick={() => increment(setWaist, waist, 110)}
-                  className="px-2 py-1 bg-gray-600 text-white text-lg font-bold hover:bg-black active:bg-blue-500"
-                >
-                  +
-                </button>
-              </div>
-            </div>
+        {/* Image select */}
+        <div className="mb-4">
+          <label className="block mb-1 text-lg">
+            Select given garment to fit:
+          </label>
+          <img
+            src={image}
+            alt="Image Adjustment"
+            className={`w-28 h-28 sm:w-32 sm:h-32 object-contain cursor-pointer border hover:shadow-md ${
+              adjustCloth
+                ? 'border-red-500 shadow-red-500'
+                : 'border-black hover:border-blue-500'
+            }`}
+            onClick={() => setAdjustCloth(true)}
+          />
+        </div>
 
-          
+        {/* Color selection */}
+        <div className="mb-4">
+          <label className="block mb-1">Shirt Color</label>
+          <div className="flex flex-wrap gap-2">
+            {availableColors.map((color) => (
+              <div
+                key={color}
+                className={`w-10 h-10 rounded-full border-4 cursor-pointer ${
+                  selectedColor === color
+                    ? 'border-slate-700'
+                    : 'border-transparent'
+                }`}
+                style={{ background: color }}
+                onClick={() => setSelectedColor(color)}
+              ></div>
+            ))}
+          </div>
+        </div>
 
-              {/* Fitting Clothes */}
-            <div className="mb-2">
-                  <label className="block mb-1 text-lg "> Select given garment to fit:</label>
-                  <img src={image} alt="Image Adjustment" 
-                    className={`w-32 h-32 sm:h-34 md:w-34 md:h-34 object-contain cursor-pointer border border-b-2 hover:border-blue-500 active:border-red-300 border-black hover:shadow-md hover:shadow-blue-500
-                      ${adjustCloth ? 'border-red-500 shadow-md shadow-red-500': ''}`}
-                  onClick={()=> setAdjustCloth(true)}
-                  />
-      </div>
+        {/* Buttons */}
+        <div className="flex flex-col gap-3 mt-4 sm:flex-row">
+          <button
+            className="px-6 py-2 text-base text-white bg-blue-600 rounded shadow-md hover:bg-slate-400 active:bg-gray-700 shadow-blue-400"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`/product/${productId}`);
+            }}
+          >
+            Cancel
+          </button>
 
-        {/* Color Selection  */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              addToCart(productData._id, size);
+              navigate(`/product/${productId}`);
+            }}
+            className="px-6 py-2 text-base text-white bg-black rounded shadow-md hover:shadow-blue-300 hover:bg-gray-600 active:bg-gray-700"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
 
-            <div className="mb-3">
-              <label className="block mb-1">Shirt Color</label>
-
-              <div className="flex gap-2">
-                {availableColors.map((color) => (
-                  <div
-                    key={color}
-                    className={`w-10 h-10 rounded-full border-4 cursor-pointer ${
-                      selectedColor === color
-                        ? "border-slate-700"
-                        : "border-transparent"
-                    }`}
-                    style={{ background: color }}
-                    onClick={() => setSelectedColor(color)}
-                  ></div>
-                ))}
-              </div>
-            </div>
-
-            <div className='flex flex-row gap-3'>
-<button 
-  className='bg-blue-600 text-white px-8 py-3 text-sm active:bg-gray-700 shadow-md shadow-blue-400 hover:bg-slate-400'
-  onClick={(e) => {
-    e.preventDefault();
-    navigate(`/product/${productId}`);
-  }}
->
-  Cancel
-</button>
-
-<button 
-  onClick={(e) => {
-    e.preventDefault();
-    addToCart(productData._id, size);
-    navigate(`/product/${productId}`);
-  }} 
-  className='bg-black text-white px-8 py-3 text-sm shadow-md active:bg-gray-700 hover:shadow-blue-300 hover:bg-gray-400'
->
-  ADD TO CART
-</button>
-
-      </div>
-
-          </fieldset>
-        </form>
-      </div>
-    </div>
   );
 };
