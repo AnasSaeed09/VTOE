@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { fadeIn } from "../variants";
 
 const Product = () => {
-  const navigate = useNavigate();
+
   const { productId } = useParams();
   const { products, currency, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
@@ -110,7 +109,8 @@ const Product = () => {
             toast.error("Select Product Size");
             return;
           }
-          navigate(`/virtualtry-on/${productId}/${size}`);
+          window.location.href = `/virtualtry-on/${productId}/${size}`;
+
         }}
       >
         Try on
