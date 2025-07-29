@@ -18,7 +18,7 @@ export function MaleModel({ adjustCloth, height, waist, shirtColor, product, set
 );
 
 
-  const clothingModel = useGLTF(product?.model);
+  const clothingModel = useGLTF(product.model);
    const scene = humanModel.scene;
   const humanRef = useRef();
   const clothingRef = useRef();
