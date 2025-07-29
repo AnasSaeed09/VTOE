@@ -17,7 +17,18 @@ const ShopContextProvider = (props) => {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
   const { setLoading } = useLoading();
+const [tokenLoading, setTokenLoading] = useState(true); // ✅
 
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    setTokenLoading(false); // ✅ only set false once loading is done
+  }, []);
+
+
+  
   const addToCart = async (itemId, size) => {
     if (!size) {
       toast.error("Select Product Size");
@@ -181,6 +192,7 @@ const ShopContextProvider = (props) => {
     backendUrl,
     setToken,
     token,
+    tokenLoading
   };
 
   return (
