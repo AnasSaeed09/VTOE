@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three'
 
 
+
 export function MaleModel({ adjustCloth, height, waist, shirtColor, product, setIsLoading }) {
 
   
@@ -16,7 +17,8 @@ export function MaleModel({ adjustCloth, height, waist, shirtColor, product, set
     : "https://AnasSaeed09.github.io/EcoModels/tryOn-Models/Woman.glb"
 );
 
-  const clothingModel = useGLTF(product.model);
+
+  const clothingModel = useGLTF(product?.model);
    const scene = humanModel.scene;
   const humanRef = useRef();
   const clothingRef = useRef();
@@ -34,13 +36,13 @@ export function MaleModel({ adjustCloth, height, waist, shirtColor, product, set
   }, [scene]);
 
 
-useEffect(()=>{
-
-  if(scene && clothingModel.scene){
-    setIsLoading?.(false);
-  }
-
-},[scene, clothingModel,setIsLoading])
+ useEffect(() => {
+    if (scene && clothingModel.scene) {
+      // ✅ Delay to ensure post-render, preventing "setState during render"
+      const timeout = setTimeout(() => setIsLoading?.(false), 0);
+      return () => clearTimeout(timeout);
+    }
+  }, [scene, clothingModel.scene, setIsLoading]);
 
 // For Handling height and waist on Human Model
 useEffect(() => {
@@ -58,9 +60,9 @@ useEffect(() => {
   const heightScale = height / DEFAULT_HEIGHT;
   const waistScale = waist / DEFAULT_WAIST;
 
-  const newX = 0.9 + waistScale * 0.15;
-  const newY = 0.9 + heightScale * 0.1;
-  const newZ = 0.9 + waistScale * 0.15;
+  const newX = 0.95 + waistScale * 0.15;
+  const newY = 0.95 + heightScale * 0.1;
+  const newZ = 0.95 + waistScale * 0.15;
 
   spine.scale.set(newX, newY, newZ);
 
@@ -69,6 +71,7 @@ useEffect(() => {
   setHeights(newY);
   setWaists(newX);
 }, [height, waist, humanModel, shirtColor, clothingModel]);
+
 
 // Function to Handle Colors on shirt
 const handleColorChange = (object) => {
@@ -85,6 +88,7 @@ const handleColorChange = (object) => {
   useEffect(() => {
     
  if(!adjustCloth) return;
+
   const suit = product.subCategory === "Bottomwear"
     ? scene.getObjectByName("Pants")
     : scene.getObjectByName("Cloth");
@@ -123,7 +127,7 @@ const handleColorChange = (object) => {
   }
 
 
-  }, [adjustCloth,heights, waists]);
+  }, [adjustCloth,heights, waists, clothingModel]);
 
   // For Applying color on shirt
 useEffect(()=>{
@@ -163,5 +167,6 @@ MaleModel.propTypes = {
       category: PropTypes.string.isRequired,
        subCategory: PropTypes.string.isRequired,
        model: PropTypes.string.isRequired,  
-    }).isRequired
+    }).isRequired,
+setIsLoading: PropTypes.func.isRequired,
 }
