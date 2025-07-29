@@ -5,11 +5,11 @@ import { MaleModel } from "../components/model_components/MaleModel";
 import { DirectionalLight } from "three";
 import { Loader } from "../components/Loader";
 import { ErrorBoundary } from 'react-error-boundary';
-import { useLoading } from "../context/LoadingContext";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 
 import { useNavigate } from 'react-router-dom';
+import { useLoading } from "../context/LoadingContext";
 
 
 
@@ -25,7 +25,18 @@ export const VirtualTryOn = () => {
   const [waist, setWaist] = useState(40);
   const [selectedColor, setSelectedColor] = useState("");
   const availableColors = ["red", "blue", "yellow", "green"];
- const [isLoading, setIsLoading] = useState(false);
+const { loading: isLoading, setLoading: setIsLoading } = useLoading();
+
+
+useEffect(() => {
+  const refreshedKey = `refreshed-${productId}`;
+
+  if (!sessionStorage.getItem(refreshedKey)) {
+    sessionStorage.setItem(refreshedKey, "true");
+    window.location.reload(); // forces reload once per product
+  }
+}, [productId]);
+
 
  const fetchProductData = async () =>{
     products.map((item)=>{
@@ -65,7 +76,8 @@ setter(value -1 );
   return (
     <div className="flex flex-col w-full min-h-screen gap-4 p-4 sm:flex-row bg-slate-700 sm:p-10">
   {/* Canvas */}
-  <div className="bg-slate-400 w-full sm:w-1/2 h-[400px] sm:h-full items-center flex justify-center rounded-md shadow-md">
+ <div className="bg-slate-400 w-full sm:w-1/2 h-[600px] sm:h-screen items-center flex justify-center rounded-md shadow-md">
+
     <ErrorBoundary FallBackComponent={ErrorFallback}>
       <Canvas
         camera={{ position: [1, 3, 14], fov: 15 }}
@@ -78,7 +90,7 @@ setter(value -1 );
         <pointLight position={[-1, 1, 1]} intensity={8} />
         <Environment preset="studio" />
 
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Loader/>}>
           <MaleModel
             key={`${height}-${waist}-${selectedColor}-${adjustCloth}`}
             adjustCloth={adjustCloth}
@@ -179,16 +191,22 @@ setter(value -1 );
           <label className="block mb-1 text-lg">
             Select given garment to fit:
           </label>
-          <img
-            src={image}
-            alt="Image Adjustment"
-            className={`w-28 h-28 sm:w-32 sm:h-32 object-contain cursor-pointer border hover:shadow-md ${
-              adjustCloth
-                ? 'border-red-500 shadow-red-500'
-                : 'border-black hover:border-blue-500'
-            }`}
-            onClick={() => setAdjustCloth(true)}
-          />
+         {image ? (
+    <img
+      src={image}
+      alt="Image Adjustment"
+      className={`w-28 h-28 sm:w-32 sm:h-32 object-contain cursor-pointer border hover:shadow-md ${
+        adjustCloth
+          ? 'border-red-500 shadow-red-500'
+          : 'border-black hover:border-blue-500'
+      }`}
+      onClick={() => setAdjustCloth(true)}
+    />
+  ) : (
+    <div className="w-28 h-28 sm:w-32 sm:h-32 border border-dashed border-gray-400 flex items-center justify-center text-xs text-gray-400">
+      No image
+    </div>
+  )}
         </div>
 
         {/* Color selection */}
@@ -216,6 +234,7 @@ setter(value -1 );
             className="px-6 py-2 text-base text-white bg-blue-600 rounded shadow-md hover:bg-slate-400 active:bg-gray-700 shadow-blue-400"
             onClick={(e) => {
               e.preventDefault();
+  
               navigate(`/product/${productId}`);
             }}
           >
@@ -226,6 +245,7 @@ setter(value -1 );
             onClick={(e) => {
               e.preventDefault();
               addToCart(productData._id, size);
+              
               navigate(`/product/${productId}`);
             }}
             className="px-6 py-2 text-base text-white bg-black rounded shadow-md hover:shadow-blue-300 hover:bg-gray-600 active:bg-gray-700"
