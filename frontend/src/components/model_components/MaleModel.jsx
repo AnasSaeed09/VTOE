@@ -11,6 +11,10 @@ export function MaleModel({ adjustCloth, height, waist, shirtColor, product, set
   const [heights, setHeights] = useState(1);
   const [waists, setWaists] = useState(1);
 
+   if (!product || !product.model) {
+    console.warn("Invalid or missing product model:", product);
+  
+  }
   const humanModel = useGLTF(
   product.category === "Men"
     ? "https://AnasSaeed09.github.io/EcoModels/tryOn-Models/Male.glb"
@@ -18,7 +22,8 @@ export function MaleModel({ adjustCloth, height, waist, shirtColor, product, set
 );
 
 
-  const clothingModel = useGLTF(product.model);
+  const clothingModel = useGLTF(product.model || "https://AnasSaeed09.github.io/EcoModels/MShirt2.glb");
+  
    const scene = humanModel.scene;
   const humanRef = useRef();
   const clothingRef = useRef();
@@ -60,9 +65,9 @@ useEffect(() => {
   const heightScale = height / DEFAULT_HEIGHT;
   const waistScale = waist / DEFAULT_WAIST;
 
-  const newX = 0.95 + waistScale * 0.15;
-  const newY = 0.95 + heightScale * 0.1;
-  const newZ = 0.95 + waistScale * 0.15;
+  const newX = 1 + waistScale * 0.15;
+  const newY = 1 + heightScale * 0.1;
+  const newZ = 1 + waistScale * 0.15;
 
   spine.scale.set(newX, newY, newZ);
 
