@@ -1,6 +1,6 @@
 import { useState, Suspense, useEffect, useContext } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { MaleModel } from "../components/model_components/MaleModel";
 import { DirectionalLight } from "three";
 import { Loader } from "../components/Loader";
@@ -10,6 +10,7 @@ import { ShopContext } from "../context/ShopContext";
 
 import { useNavigate } from 'react-router-dom';
 import { useLoading } from "../context/LoadingContext";
+import { assets } from "../assets/assets";
 
 
 
@@ -28,21 +29,21 @@ export const VirtualTryOn = () => {
 const { loading: isLoading, setLoading: setIsLoading } = useLoading();
 
 
-useEffect(() => {
-  const refreshedKey = `refreshed-${productId}`;
+// useEffect(() => {
+//   const refreshedKey = `refreshed-${productId}`;
 
-  if (!sessionStorage.getItem(refreshedKey)) {
-    sessionStorage.setItem(refreshedKey, "true");
-    window.location.reload(); // forces reload once per product
-  }
-}, [productId]);
+//   if (!sessionStorage.getItem(refreshedKey)) {
+//     sessionStorage.setItem(refreshedKey, "true");
+//     window.location.reload(); // forces reload once per product
+//   }
+// }, [productId]);
 
 
  const fetchProductData = async () =>{
     products.map((item)=>{
       if(item._id === productId){
           setProductData(item);
-          setImage(item.image[0]);
+          setImage(item.image?.[0] ?? '');
           return null;
       }
     })
@@ -193,7 +194,7 @@ setter(value -1 );
           </label>
          {image ? (
     <img
-      src={image}
+      src={image || assets.hero_img} 
       alt="Image Adjustment"
       className={`w-28 h-28 sm:w-32 sm:h-32 object-contain cursor-pointer border hover:shadow-md ${
         adjustCloth
@@ -234,7 +235,7 @@ setter(value -1 );
             className="px-6 py-2 text-base text-white bg-blue-600 rounded shadow-md hover:bg-slate-400 active:bg-gray-700 shadow-blue-400"
             onClick={(e) => {
               e.preventDefault();
-  
+               useGLTF.clear(productData.model)
               navigate(`/product/${productId}`);
             }}
           >
@@ -245,7 +246,7 @@ setter(value -1 );
             onClick={(e) => {
               e.preventDefault();
               addToCart(productData._id, size);
-              
+             
               navigate(`/product/${productId}`);
             }}
             className="px-6 py-2 text-base text-white bg-black rounded shadow-md hover:shadow-blue-300 hover:bg-gray-600 active:bg-gray-700"
