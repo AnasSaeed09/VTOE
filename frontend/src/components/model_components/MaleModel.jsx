@@ -17,8 +17,8 @@ export function MaleModel({ adjustCloth, height, waist, shirtColor, product, set
   }
   const humanModel = useGLTF(
   product?.category === "Men"
-    ? "https://AnasSaeed09.github.io/EcoModels/tryOn-Models/Male.glb"
-    : "https://corsproxy.io/?https://raw.githubusercontent.com/AnasSaeed09/EcoModels/main/tryOn-Models/Woman.glb"
+    ? "https://anasaaeed09.github.io/EcoModels/tryOn-Models/Male.glb"
+    : "https://anassaeed09.github.io/EcoModels/tryOn-Models/Woman.glb"
 );
 
 
