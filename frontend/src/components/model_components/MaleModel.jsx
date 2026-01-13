@@ -17,8 +17,8 @@ export function MaleModel({ adjustCloth, height, waist, shirtColor, product, set
   }
   const humanModel = useGLTF(
   product?.category === "Men"
-    ? import.meta.env.MALE_MODEL_API_URL
-    : import.meta.env.FEMALE_MODEL_API_URL
+    ? import.meta.env.VITE_MALE_MODEL_API_URL
+    : import.meta.env.VITE_FEMALE_MODEL_API_URL
 );
 
 
