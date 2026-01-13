@@ -17,8 +17,8 @@ export function MaleModel({ adjustCloth, height, waist, shirtColor, product, set
   }
   const humanModel = useGLTF(
   product?.category === "Men"
-    ? "https://anasaaeed09.github.io/EcoModels/tryOn-Models/Male.glb"
-    : "https://res.cloudinary.com/daw8paqj6/image/upload/v1768314158/Woman_dcprlw.glb"
+    ? import.meta.env.MALE_MODEL_API_URL
+    : import.meta.env.FEMALE_MODEL_API_URL
 );
 
 
