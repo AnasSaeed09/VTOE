@@ -13,6 +13,42 @@ a.active hr{
     color: red;
 }
 
+body{
+   --tw-bg-opacity: 1;
+    background-color: rgb(3 7 18 / var(--tw-bg-opacity, 1))
+}
+.text-color-change{
+  animation: color-change 2s ease-out infinite;
+}
+
+@keyframes color-change{
+  from{
+    color:rgb(214, 7, 7);
+  }
+  to{
+    color: cyan;
+  }
+}
+
+
+@keyframes noticmation{
+  0%{
+    left: 100%;
+  }
+  100%{
+    left:-100%;
+  }
+}
+.marquee-box{
+  display: flex;
+  align-items: center;
+  width: 200%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  animation: noticmation 60s linear infinite;
+}
+
 .prata-regular {
     font-family: "Prata", serif;
     font-weight: 400;
@@ -28,4 +64,25 @@ a.active hr{
         background-color: black;
         color: white;
     }
+    .marquee-box{
+      width: 300%;
+    }
+  }
+  .gradient-edge:nth-of-type(1){
+    left: 0;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      90deg,
+      rgba(0,0,0, 1) 0%,
+      rgba(255,255,255,0) 100%
+    );
+  }
+  .gradient-edge:nth-of-type(2){
+    right: 0;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      -90deg,
+      rgba(0,0,0, 1) 0%,
+      rgba(255,255,255,0) 100%
+    );
   }
