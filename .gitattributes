@@ -3,3 +3,13 @@
 
 # React JSX
 *.jsx linguist-language=JavaScript
+
+# CSS / Tailwind
+*.css linguist-language=CSS
+*.scss linguist-language=SCSS
+
+# HTML
+*.html linguist-language=HTML
+
+# JSON
+*.json linguist-language=JSON
