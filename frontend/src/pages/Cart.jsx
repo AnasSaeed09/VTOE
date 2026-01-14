@@ -39,7 +39,7 @@ const Cart = () => {
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: false, amount: 0.7 }}
+        viewport={{ once: false, amount: 0.2 }}
       >
         {cartData.map((item, index) => {
           const productData = products.find(
@@ -54,7 +54,7 @@ const Cart = () => {
             >
               <div className="flex items-start gap-6 ">
                 <img
-                  className="w-16 sm:w-20 bg-gray-200 "
+                  className="w-16 bg-gray-200 sm:w-20 "
                   src={productData.image[0]}
                   alt=""
                 />
@@ -90,7 +90,7 @@ const Cart = () => {
               />
               <img
                 onClick={() => updateQuantity(item._id, item.size, 0)}
-                className="w-4 mr-4 cursor-pointer sm:w-5 shadow-md hover:shadow-red-300 active:shadow-blue-300"
+                className="w-4 mr-4 shadow-md cursor-pointer sm:w-5 hover:shadow-red-300 active:shadow-blue-300"
                 src={assets.bin_icon}
                 alt=""
               />
@@ -102,7 +102,7 @@ const Cart = () => {
       <div className="flex justify-end my-20">
         <div className="w-full sm:w-[450px]">
           <CartTotal />
-          <div className="w-full  text-end">
+          <div className="w-full text-end">
             <button
               onClick={() => navigate("/place-order")}
               className="px-8 py-3 my-8 text-sm text-white bg-black hover:bg-red-300 active:bg-blue-300"
