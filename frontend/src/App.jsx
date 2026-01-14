@@ -18,15 +18,37 @@ import { VirtualTryOn } from "./pages/VirtualTryOn";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useLoading } from "./context/LoadingContext";
 import { FullScreenLoader } from "./components/FullScreenLoader";
-import { useEffect } from "react";
 import AiChat from "./components/AiChat";
+
 const App = () => {
   const { loading } = useLoading();
 
   return (
     <>
       {loading && <FullScreenLoader />}
-      <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] bg-gray-950 ">
+      {/* Notice Animation */}
+      <div className="relative my-5 md:my-7">
+        <div className="absolute bottom-0 z-10 h-full w-36 gradient-edge" />
+        <div className="absolute bottom-0 z-10 h-full w-36 gradient-edge" />
+        <div className="w-[100dvw] overflow-hidden relative h-5">
+          <div className="marquee-box">
+            <h1 className="text-xl font-bold text-color-change">Notice!.</h1>
+            <p className="ml-2 text-xl font-semibold">
+              This is not an
+              <span className="ml-2 mr-2 text-color-change">
+                AI generated site.
+              </span>
+              The text shown below as AI are actually animations done using
+              <span className="ml-2 text-color-change">
+                Framer Motion JS Library.
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ">
         <ToastContainer />
         <AiChat />
         <Navbar />
