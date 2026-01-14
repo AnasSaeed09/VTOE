@@ -1,0 +1,5 @@
+# Javascript and Node
+*.js linguist-language=JavaScript
+
+# React JSX
+*.jsx linguist-language=JavaScript
