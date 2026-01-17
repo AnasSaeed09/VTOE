@@ -87,7 +87,7 @@ The system enhances online shopping by combining real-time 3D visualization with
 
 ## 📅 Project Info
 - Project Type: Final Year Project (FYP)
-- Developed on July 28, 2025
+- Developed on Nov 28, 2025
 
 ---
 ## 📄 License
