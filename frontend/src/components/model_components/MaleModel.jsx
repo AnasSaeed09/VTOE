@@ -158,7 +158,7 @@ useEffect(()=>{
     <group ref={humanRef}>
       <primitive object={humanModel.scene} />
     </group>
- ): null
+ ): "undefined"
   );
 }
 
