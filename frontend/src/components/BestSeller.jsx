@@ -11,7 +11,7 @@ const BestSeller = () => {
     const [bestSeller,setBestSeller] = useState([]);
     const [step, setStep] = useState(0);
       const ref = useRef(null);
-      const isInView = useInView(ref, { amount: 0.6, once: false });
+      const isInView = useInView(ref, { amount: 0.6, once: true });
      
       useEffect(() => {
         if (!isInView) {
@@ -30,7 +30,7 @@ const BestSeller = () => {
       ref={ref}
  
       
-      className='text-center text-3xl py-8'>
+      className='py-8 text-3xl text-center'>
         <Title text1={'BEST'} text2={'SELLERS'}/>
                 <TypeWriterAnimation 
                 key={`step-0-${isInView}`}
@@ -42,7 +42,7 @@ const BestSeller = () => {
                  classString="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-300"/>
       </div>
 
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
+      <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-6'>
         {  
             bestSeller.map((item,index)=>(
            

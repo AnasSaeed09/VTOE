@@ -11,7 +11,7 @@ const LatestCollection = () => {
   const [latestProducts, setLatestProducts] = useState([]);
   const [step, setStep] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.6, once: false });
+  const isInView = useInView(ref, { amount: 0.6, once: true });
   useEffect(() => {
     if (!isInView) {
       setStep(0); // Reset animation when leaving view
@@ -24,7 +24,7 @@ const LatestCollection = () => {
 
   return (
     <div className="my-10">
-      <div ref={ref} className="text-center py-8 text-3xl ">
+      <div ref={ref} className="py-8 text-3xl text-center ">
         <Title text1={"LATEST"} text2={"COLLECTIONS"} />
         <TypeWriterAnimation
           key={`step-0-${isInView}`}
@@ -38,7 +38,7 @@ const LatestCollection = () => {
       </div>
 
       {/* Rendering Products */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-6">
         {latestProducts.map((item, index) => (
           <ProductItem
             key={index}

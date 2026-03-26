@@ -5,18 +5,18 @@ import { useInView } from "framer-motion";
 const Hero = () => {
   const [step, setStep] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.6, once: false });
+  const isInView = useInView(ref, { amount: 0.6, once: true });
   useEffect(() => {
     if (!isInView) {
       setStep(0);
     }
   }, [isInView]);
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400">
+    <div className="flex flex-col border border-gray-400 sm:flex-row">
       {/* Hero Left Side */}
       <div
         ref={ref}
-        className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0"
+        className="flex items-center justify-center w-full py-10 sm:w-1/2 sm:py-0"
       >
         <div className="text-[#414141]">
           <div className="flex items-center gap-2">
