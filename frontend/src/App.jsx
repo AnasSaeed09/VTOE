@@ -19,6 +19,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useLoading } from "./context/LoadingContext";
 import { FullScreenLoader } from "./components/FullScreenLoader";
 import AiChat from "./components/AiChat";
+import { SnowParticles } from "./components/SnowParticles";
 
 const App = () => {
   const { loading } = useLoading();
@@ -46,6 +47,8 @@ const App = () => {
           </div>
         </div>
       </div>
+   
+      <SnowParticles />
       
       
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ">

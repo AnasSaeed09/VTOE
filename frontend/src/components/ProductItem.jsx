@@ -8,7 +8,7 @@ const ProductItem = ({ id, image, name, price }) => {
   const { currency } = useContext(ShopContext);
   const [step, setStep] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.6, once: false });
+  const isInView = useInView(ref, { amount: 0.6, once: true });
 
   return (
     <motion.div
@@ -17,10 +17,10 @@ const ProductItem = ({ id, image, name, price }) => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: false, amount: 0.2 }}
-      className="text-gray-700 cursor-pointer shadow-md hover:shadow-blue-500 transition-shadow duration-300 p-2 rounded"
+      className="p-2 text-gray-700 transition-shadow duration-300 rounded shadow-md cursor-pointer hover:shadow-blue-500"
     >
       <Link onClick={() => scrollTo(0, 0)} to={`/product/${id}`}>
-        <div className="overflow-hidden w-full h-64 rounded-lg bg-gray-600 ">
+        <div className="w-full h-64 overflow-hidden bg-gray-600 rounded-lg ">
           <img
             className="transition ease-in-out hover:scale-110 hover:drop-shadow-[0_4px_10px_rgba(59,130,246,0.5)] w-full h-full object-cover"
             src={image[0]}
